@@ -1,0 +1,278 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "id": "0VfA_7ElYm9n"
+      },
+      "outputs": [],
+      "source": [
+        "#Q_2\n",
+        "import numpy as np\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "np.random.seed(43)\n",
+        "\n",
+        "A = np.random.randint(0,10,size=(5,5))\n",
+        "print(\"Matrix A\")\n",
+        "print(A)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8iXd1BKZYu2K",
+        "outputId": "adb78caa-f8aa-4e7d-d5ff-d5d8f5101fd4"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Matrix A\n",
+            "[[4 0 1 5 0]\n",
+            " [3 1 2 7 0]\n",
+            " [3 2 9 1 2]\n",
+            " [2 3 5 4 4]\n",
+            " [0 5 8 0 0]]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# reduce A in row eachelon form\n",
+        "\n",
+        "rows , cols = A.shape\n",
+        "for i in range(min(rows,cols)):\n",
+        "  pivot_rows = i\n",
+        "  while pivot_rows < rows and A[pivot_rows,i]==0:\n",
+        "    pivot_rows += 1\n",
+        "  if pivot_rows == rows:\n",
+        "    continue\n",
+        "   #swap rows to bring pivot element tom the digonal\n",
+        "  A[[i,pivot_rows]] = A[[pivot_rows,i]]\n",
+        "  A[i] = A[i] / A[i,i]\n",
+        "  for j in range (i+1,rows):\n",
+        "    A[j] = A[j] - A[j,i] * A[i]\n",
+        "\n",
+        "print(\"ROW EACHELON FORM OF A\")\n",
+        "print(A)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "DxQsjmaiYvb7",
+        "outputId": "9dfedc46-2f6f-4568-c9f4-b71b9bc60a3d"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "ROW EACHELON FORM OF A\n",
+            "[[ 1  0  0  1  0]\n",
+            " [ 0  1  2  4  0]\n",
+            " [ 0  0  1 -2  0]\n",
+            " [ 0  0  0  1  0]\n",
+            " [ 0  0  0  0  0]]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Q_3"
+      ],
+      "metadata": {
+        "id": "_fl9OFF2Y7rm"
+      },
+      "execution_count": 5,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "U,Sigma,Vt = np.linalg.svd(A)\n",
+        "print(\"\\nMatrix U:\")\n",
+        "print(U)\n",
+        "print(\"\\nMatrix Sigma:\")\n",
+        "print(np.diag(Sigma))\n",
+        "print(\"\\nMatrix Vt:\")\n",
+        "print(Vt)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ohmn1fACZFNQ",
+        "outputId": "5b741126-0c37-4260-91f1-19ac33706c2f"
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "Matrix U:\n",
+            "[[ 0.19573409  0.26068557 -0.94528551 -0.01290336  0.        ]\n",
+            " [ 0.90952259 -0.3924724   0.0815951  -0.10989224  0.        ]\n",
+            " [-0.31492319 -0.8631491  -0.30663614  0.24853833  0.        ]\n",
+            " [ 0.18783024  0.1816097   0.07584073  0.96228161  0.        ]\n",
+            " [ 0.          0.          0.          0.          1.        ]]\n",
+            "\n",
+            "Matrix Sigma:\n",
+            "[[4.97638308 0.         0.         0.         0.        ]\n",
+            " [0.         1.8156683  0.         0.         0.        ]\n",
+            " [0.         0.         0.96214778 0.         0.        ]\n",
+            " [0.         0.         0.         0.11502915 0.        ]\n",
+            " [0.         0.         0.         0.         0.        ]]\n",
+            "\n",
+            "Matrix Vt:\n",
+            "[[ 0.0393326   0.1827678   0.30225205  0.93471524  0.        ]\n",
+            " [ 0.14357555 -0.21615864 -0.90770649  0.32974298  0.        ]\n",
+            " [-0.98247435  0.08480517 -0.1490893   0.07296999  0.        ]\n",
+            " [-0.1121747  -0.95534259  0.24997002  0.11069043  0.        ]\n",
+            " [ 0.          0.          0.          0.          1.        ]]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# A equale to product of u , Sigma , Vt\n",
+        "A_reconstructed = np.dot(U,np.dot(np.diag(Sigma),Vt))\n",
+        "print(\"verify that A equals the product\")\n",
+        "print(A_reconstructed)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "-Vv-RRjzZItk",
+        "outputId": "6f052c86-65de-4d09-8b6c-f69597579362"
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "verify that A equals the product\n",
+            "[[ 1.00000000e+00  1.24489382e-15 -3.52536063e-17  1.00000000e+00\n",
+            "   0.00000000e+00]\n",
+            " [ 3.81778707e-16  1.00000000e+00  2.00000000e+00  4.00000000e+00\n",
+            "   0.00000000e+00]\n",
+            " [ 2.29831666e-16  5.45017633e-16  1.00000000e+00 -2.00000000e+00\n",
+            "   0.00000000e+00]\n",
+            " [-5.78686980e-18 -7.53467344e-17  8.10928272e-18  1.00000000e+00\n",
+            "   0.00000000e+00]\n",
+            " [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00\n",
+            "   0.00000000e+00]]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "rank_2_approximation = np.dot(U[:,:2],np.dot(np.diag(Sigma[:2]),Vt[:2,:]))\n",
+        "print(\"\\nrank 2 approxiamtion\")\n",
+        "print(rank_2_approximation)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "swMx8lJaZOSz",
+        "outputId": "635f1ec6-049d-48c1-d42c-ad6dfda233ca"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "rank 2 approxiamtion\n",
+            "[[ 0.1062688   0.07571269 -0.13522634  1.06653082  0.        ]\n",
+            " [ 0.07571269  0.98126593  2.01486431  3.99567059  0.        ]\n",
+            " [-0.28665172  0.05233244  0.94886786 -1.98163626  0.        ]\n",
+            " [ 0.08410781  0.09955905 -0.01679024  0.98242301  0.        ]\n",
+            " [ 0.          0.          0.          0.          0.        ]]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "rank_3_approximation = np.dot(U[:,:3],np.dot(np.diag(Sigma[:3]),Vt[:3,:]))\n",
+        "print(\"\\nrank 3 approximation\")\n",
+        "print(rank_3_approximation)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "q-D1thxcZRmG",
+        "outputId": "799a1538-f19d-416f-fe7c-b3a9cb8f7003"
+      },
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "rank 3 approximation\n",
+            "[[ 9.99833503e-01 -1.41797915e-03  3.71021120e-04  1.00016429e+00\n",
+            "   0.00000000e+00]\n",
+            " [-1.41797915e-03  9.87923695e-01  2.00315982e+00  4.00139922e+00\n",
+            "   0.00000000e+00]\n",
+            " [ 3.20697942e-03  2.73124342e-02  9.92853569e-01 -2.00316455e+00\n",
+            "   0.00000000e+00]\n",
+            " [ 1.24166658e-02  1.05747285e-01 -2.76692899e-02  9.87747628e-01\n",
+            "   0.00000000e+00]\n",
+            " [ 0.00000000e+00  0.00000000e+00  0.00000000e+00  0.00000000e+00\n",
+            "   0.00000000e+00]]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "7Z7I1v3JZYkE"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
